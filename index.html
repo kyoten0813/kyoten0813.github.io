@@ -69,19 +69,96 @@
             <h2>1. GitHubの基本的な使い方</h2>
             <ul>
                 <li><strong>リポジトリの作成方法</strong><br>
-                    1. GitHubにログインし、右上の「＋」ボタンから「New repository」を選択します。<br>
-                    2. リポジトリ名を入力し、「Create repository」をクリックします。
+                    <ol>
+                        <li>GitHub（<a href="https://github.com/" target="_blank">https://github.com/</a>）にアクセスし、アカウントを作成またはログインします。</li>
+                        <li>画面右上の「＋」ボタンをクリックし、「New repository」を選択します。</li>
+                        <li>リポジトリ名（例: <code>my-first-repo</code>）を入力します。<br>
+                            <ul>
+                                <li>必要に応じて説明（Description）も入力できます。</li>
+                                <li>「Public」（公開）か「Private」（非公開）を選択します。</li>
+                                <li>「Initialize this repository with a README」にチェックを入れると、最初からREADMEファイルが作成されます。</li>
+                            </ul>
+                        </li>
+                        <li>「Create repository」ボタンをクリックして作成完了です。</li>
+                    </ol>
+                    <p><strong>Tips:</strong> リポジトリ名は英数字・ハイフン（-）のみ推奨。後から変更も可能です。</p>
+                </li>
+                <li><strong>ローカルリポジトリの作成とクローン</strong><br>
+                    <ol>
+                        <li>PCにGitをインストールします（<a href="https://git-scm.com/" target="_blank">公式サイト</a>）。</li>
+                        <li>コマンドプロンプトやターミナルで、作業用フォルダに移動します。</li>
+                        <li>既存リポジトリをコピーする場合：<br>
+                            <code>git clone https://github.com/ユーザー名/リポジトリ名.git</code>
+                        </li>
+                        <li>新規作成の場合：<br>
+                            <code>git init</code> で空のリポジトリを作成し、<code>git remote add origin ...</code>でGitHubと接続します。
+                        </li>
+                    </ol>
+                    <p><strong>注意:</strong> クローンした場合は、リモート（origin）が自動で設定されます。</p>
+                </li>
+                <li><strong>ファイルの追加・編集・削除</strong><br>
+                    <ul>
+                        <li>新しいファイルを作成・編集したら、<code>git status</code>で変更内容を確認します。</li>
+                        <li>変更をステージするには：<br>
+                            <code>git add ファイル名</code> または <code>git add .</code>（全て）
+                        </li>
+                        <li>ファイルを削除した場合も <code>git add 削除したファイル名</code> でステージします。</li>
+                    </ul>
                 </li>
                 <li><strong>コミット</strong><br>
-                    ファイルを編集したら、<code>git add ファイル名</code> で変更を追加し、<code>git commit -m "メッセージ"</code> で保存します。
+                    <ul>
+                        <li>ステージした変更を履歴として記録するには：<br>
+                            <code>git commit -m "変更内容の説明"</code>
+                        </li>
+                        <li>コミットメッセージは簡潔かつ具体的に書くと、後で見返すときに便利です。</li>
+                        <li>例：<code>git commit -m "READMEを追加"</code></li>
+                    </ul>
                 </li>
                 <li><strong>プッシュ</strong><br>
-                    ローカルの変更をGitHubに反映するには、<code>git push</code> を実行します。
+                    <ul>
+                        <li>ローカルのコミットをGitHub上のリポジトリに反映するには：<br>
+                            <code>git push origin main</code>（mainブランチの場合）
+                        </li>
+                        <li>初回のみ <code>git push -u origin main</code> で上流ブランチを設定します。</li>
+                        <li>パスワード認証の代わりに「Personal Access Token」を使う場合があります。</li>
+                    </ul>
                 </li>
                 <li><strong>GitHub Pagesの公開方法</strong><br>
-                    1. リポジトリの「Settings」→「Pages」を開きます。<br>
-                    2. 「Branch」で公開したいブランチ（例: <code>main</code>）を選択し、「Save」をクリックします。<br>
-                    3. 数分後、指定されたURLでページが公開されます。
+                    <ol>
+                        <li>リポジトリの「Settings」タブをクリックします。</li>
+                        <li>左側メニューから「Pages」を選択します。</li>
+                        <li>「Branch」で公開したいブランチ（例: <code>main</code>）とフォルダ（<code>/ (root)</code>や<code>/docs</code>）を選びます。</li>
+                        <li>「Save」をクリックします。</li>
+                        <li>数分後、「Your site is live at ...」とURLが表示されます。</li>
+                    </ol>
+                    <ul>
+                        <li>トップページは<code>index.html</code>という名前で配置します。</li>
+                        <li>静的サイト（HTML/CSS/JSのみ）が公開可能です。</li>
+                        <li>独自ドメインの設定も可能です（「Custom domain」欄）。</li>
+                    </ul>
+                    <p><strong>注意:</strong> 公開まで数分かかる場合があります。リロードして確認しましょう。</p>
+                </li>
+                <li><strong>ブランチとマージ</strong><br>
+                    <ul>
+                        <li>新しい機能や修正は別ブランチで作業するのが一般的です。</li>
+                        <li>ブランチ作成：<code>git checkout -b 新しいブランチ名</code></li>
+                        <li>作業後、<code>git push origin ブランチ名</code>でリモートにアップロードします。</li>
+                        <li>GitHub上で「Pull Request」を作成し、レビュー後に「main」などにマージします。</li>
+                    </ul>
+                </li>
+                <li><strong>プルリクエスト（Pull Request）</strong><br>
+                    <ul>
+                        <li>他の人のリポジトリに変更を提案する仕組みです。</li>
+                        <li>自分のリポジトリでも、複数人で開発する場合はPull Requestを使うと履歴が明確になります。</li>
+                        <li>レビューやコメント、差分の確認ができます。</li>
+                    </ul>
+                </li>
+                <li><strong>Issues（イシュー）</strong><br>
+                    <ul>
+                        <li>バグ報告や機能要望、タスク管理に使います。</li>
+                        <li>「New issue」からタイトル・説明・ラベルなどを入力して作成します。</li>
+                        <li>他の人と議論したり、進捗を管理できます。</li>
+                    </ul>
                 </li>
             </ul>
         </section>
@@ -95,20 +172,63 @@
                 </tr>
                 <tr>
                     <td>GitHub</td>
-                    <td>世界最大のOSS開発プラットフォーム。<br>無料で公開リポジトリが作成可能。<br>GitHub Pagesで静的サイトも公開できる。</td>
-                    <td>個人・チームの開発、OSS公開、ポートフォリオ作成</td>
+                    <td>
+                        世界最大のOSS開発プラットフォーム。<br>
+                        無料で公開リポジトリが作成可能。<br>
+                        GitHub Pagesで静的サイトも公開できる。<br>
+                        <ul>
+                            <li>豊富なサードパーティ連携（Actions, Codespaces, Copilotなど）</li>
+                            <li>スターやフォーク、ウォッチなどSNS的な機能も充実</li>
+                            <li>世界中の開発者とコラボレーション可能</li>
+                        </ul>
+                    </td>
+                    <td>
+                        個人・チームの開発、OSS公開、ポートフォリオ作成<br>
+                        ドキュメント管理、学習用プロジェクト
+                    </td>
                 </tr>
                 <tr>
                     <td>GitLab</td>
-                    <td>自社サーバーにインストール可能。<br>CI/CD機能が強力。</td>
-                    <td>企業・組織内の開発、プライベートプロジェクト</td>
+                    <td>
+                        自社サーバーにインストール可能。<br>
+                        CI/CD機能が強力。<br>
+                        <ul>
+                            <li>プライベートリポジトリも無料</li>
+                            <li>プロジェクト管理機能（Issue, Board, Wikiなど）</li>
+                            <li>オンプレミス運用でセキュリティ重視の企業向け</li>
+                        </ul>
+                    </td>
+                    <td>
+                        企業・組織内の開発、プライベートプロジェクト<br>
+                        セキュリティ要件の高い現場
+                    </td>
                 </tr>
                 <tr>
                     <td>Bitbucket</td>
-                    <td>Atlassian製。<br>プライベートリポジトリが無料で利用可能。</td>
-                    <td>小規模チーム、Jira連携</td>
+                    <td>
+                        Atlassian製。<br>
+                        プライベートリポジトリが無料で利用可能。<br>
+                        <ul>
+                            <li>JiraやTrelloなどAtlassian製品との連携が強力</li>
+                            <li>小規模チーム向けの無料枠が充実</li>
+                        </ul>
+                    </td>
+                    <td>
+                        小規模チーム、Jira連携<br>
+                        プロジェクト管理とソース管理の統合
+                    </td>
                 </tr>
             </table>
+            <h3>比較まとめ</h3>
+            <ul>
+                <li><strong>GitHub</strong>はOSSや個人開発、学習用途に最適。世界中の開発者と交流できる。</li>
+                <li><strong>GitLab</strong>は企業や組織での利用、CI/CD自動化に強み。</li>
+                <li><strong>Bitbucket</strong>はAtlassian製品との連携や小規模チームに向いている。</li>
+            </ul>
+            <p>
+                どのサービスもGitをベースにしているため、基本操作は共通です。<br>
+                用途や規模、必要な機能に応じて使い分けましょう。
+            </p>
         </section>
         <section>
             <h2>3. まとめ</h2>
@@ -116,6 +236,46 @@
                 GitHubは初心者にも使いやすく、学習やポートフォリオ作成にも最適です。<br>
                 まずはリポジトリを作成し、ファイルをアップロードしてみましょう。<br>
                 分からないことがあれば、公式ドキュメントやコミュニティも活用してみてください！
+            </p>
+            <h3>よくある質問（FAQ）</h3>
+            <ul>
+                <li><strong>Q: GitHubは無料で使えますか？</strong><br>
+                    A: 公開リポジトリは無料、プライベートリポジトリも無料枠があります。
+                </li>
+                <li><strong>Q: プログラミング初心者でも使えますか？</strong><br>
+                    A: はい。GUIツール（GitHub Desktopなど）もあり、コマンドが苦手でも始められます。
+                </li>
+                <li><strong>Q: 共同開発はどうやって行うの？</strong><br>
+                    A: Pull RequestやIssue、Wiki、Projectsなどの機能を使って複数人で効率的に開発できます。
+                </li>
+                <li><strong>Q: 間違えてファイルを消した場合は？</strong><br>
+                    A: Gitの履歴から過去の状態に戻すことができます（<code>git checkout</code>や<code>git revert</code>など）。
+                </li>
+            </ul>
+            <h3>おすすめ学習リソース</h3>
+            <ul>
+                <li><a href="https://docs.github.com/ja" target="_blank">GitHub公式ドキュメント（日本語）</a></li>
+                <li><a href="https://backlog.com/ja/git-tutorial/" target="_blank">サルでもわかるGit入門</a></li>
+                <li><a href="https://progate.com/languages/git" target="_blank">Progate Gitコース</a></li>
+                <li><a href="https://qiita.com/tags/github" target="_blank">Qiita GitHubタグ</a></li>
+            </ul>
+            <h3>注意点・トラブルシューティング</h3>
+            <ul>
+                <li>ファイルサイズが100MBを超えるとアップロードできません（LFSを利用）。</li>
+                <li>パスワード認証が廃止され、Personal Access Tokenが必要な場合があります。</li>
+                <li>公開リポジトリは誰でも閲覧できるため、個人情報や秘密情報は絶対にアップしないでください。</li>
+                <li>コミットやプッシュ時にエラーが出た場合は、エラーメッセージをよく読み、<a href="https://docs.github.com/ja" target="_blank">公式ヘルプ</a>を参照しましょう。</li>
+            </ul>
+            <h3>一歩進んだ使い方</h3>
+            <ul>
+                <li>GitHub Actionsで自動テストやデプロイを設定する</li>
+                <li>READMEにバッジや画像、リンクを追加して見やすくする</li>
+                <li>IssueテンプレートやPull Requestテンプレートを活用する</li>
+                <li>GitHub Pagesでポートフォリオやブログを公開する</li>
+            </ul>
+            <p>
+                まずは小さなプロジェクトから始めて、少しずつ慣れていきましょう。<br>
+                GitHubを使いこなせば、世界中の開発者とつながるチャンスが広がります！
             </p>
         </section>
     </main>
